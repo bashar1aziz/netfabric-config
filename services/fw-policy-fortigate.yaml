@@ -1,0 +1,59 @@
+name: FW Policy FortiGate
+ned_id: fortinet-fortios-cli-1.0
+description: FortiGate firewall policy
+
+variables:
+  POLICY_NAME:
+    label: Policy Name
+    type: string
+    required: true
+  SRC_INTF:
+    label: Source Interface
+    type: string
+    required: true
+    default: port2
+  DST_INTF:
+    label: Destination Interface
+    type: string
+    required: true
+    default: port1
+  SRC_ADDR:
+    label: Source Address
+    type: string
+    default: all
+  DST_ADDR:
+    label: Destination Address
+    type: string
+    default: all
+  SERVICE:
+    label: Service Object
+    type: string
+    default: HTTPS
+  ACTION:
+    label: Action
+    type: string
+    default: accept
+  NAT:
+    label: NAT
+    type: string
+    default: enable
+  LOGTRAFFIC:
+    label: Log Traffic
+    type: string
+    default: all
+
+template: |
+  config firewall policy
+    edit 0
+    set name {{ POLICY_NAME }}
+    set srcintf {{ SRC_INTF }}
+    set dstintf {{ DST_INTF }}
+    set srcaddr {{ SRC_ADDR }}
+    set dstaddr {{ DST_ADDR }}
+    set action {{ ACTION }}
+    set schedule always
+    set service {{ SERVICE }}
+    set nat {{ NAT }}
+    set logtraffic {{ LOGTRAFFIC }}
+    next
+  end
